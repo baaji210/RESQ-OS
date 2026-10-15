@@ -1,0 +1,19 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+*.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Local SQLite databases & backups
+*.db
+*.sqlite
+*.sqlite3
+resq_os.db
+resq_os_backup_before_cleanup.db
+atlas_backup_before_cleanup.json
