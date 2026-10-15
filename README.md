@@ -4,7 +4,13 @@
 > *A 24-hour hackathon MVP engineered for operational reliability, explainable AI triage, and human-in-the-loop disaster coordination.*
 
 ---
+## 🚀 Live Demo
 
+**Try RESQ-OS here:** [https://resq-os.vercel.app/](https://resq-os.vercel.app/)
+
+RESQ-OS is an AI-assisted disaster response and rescue coordination prototype featuring incident reporting, rule-based triage, geospatial visualization, and simulated rescue coordination.
+
+> **Note:** Simulation mode only. Not intended for real emergency dispatch or certified medical triage.
 ## 🚨 System Overview
 
 **RESQ-OS** is an autonomous emergency response coordination platform designed to convert raw emergency distress signals into actionable, explainable triage assessments, recommend suitable rescue resources, and empower human dispatchers to verify, assign, and track missions in real-time.
