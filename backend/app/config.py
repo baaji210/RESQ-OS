@@ -25,14 +25,13 @@ def sanitize_uri(uri: str) -> str:
         return ""
     # Mask password in mongodb://<user>:<pass>@<host> or mongodb+srv://<user>:<pass>@<host>
     return re.sub(r'(mongodb(?:\+srv)?://[^:]+:)([^@]+)(@)', r'\1*****\3', uri)
-CORS_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv(
-        "CORS_ORIGINS",
-        "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000"
-    ).split(",")
-    if origin.strip()
-]
+raw_origins = os.getenv(
+    "CORS_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,https://resq-os.vercel.app"
+)
+CORS_ORIGINS = [origin.strip().rstrip("/") for origin in raw_origins.split(",") if origin.strip()]
+if "https://resq-os.vercel.app" not in CORS_ORIGINS:
+    CORS_ORIGINS.append("https://resq-os.vercel.app")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 SIMULATION_MODE = os.getenv("SIMULATION_MODE", "true").lower() in ("true", "1", "yes")

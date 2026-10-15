@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Send, Sparkles, MapPin, AlertCircle, CheckCircle, Info, Search, RefreshCw } from 'lucide-react';
+import { api } from '../services/api';
 
 const PRESET_SCENARIOS = [
   {
@@ -117,8 +118,7 @@ export default function IncidentModal({ isOpen, onClose, onSubmitSuccess }) {
     setGeocoding(true);
     setGeocodeFeedback(null);
     try {
-      const res = await fetch(`/api/incidents/geocode?q=${encodeURIComponent(location.trim())}`);
-      const data = await res.json();
+      const data = await api.geocodeAddress(location.trim());
       if (data.found && data.latitude !== null && data.longitude !== null) {
         setLatitude(String(data.latitude));
         setLongitude(String(data.longitude));
@@ -188,18 +188,7 @@ export default function IncidentModal({ isOpen, onClose, onSubmitSuccess }) {
 
     setLoading(true);
     try {
-      const res = await fetch('/api/incidents', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        const errJson = await res.json().catch(() => ({}));
-        throw new Error(errJson.detail || `Server returned HTTP ${res.status}`);
-      }
-
-      const created = await res.json();
+      const created = await api.createIncident(payload);
       setSuccessData(created);
       setTimeout(() => {
         onSubmitSuccess(created);

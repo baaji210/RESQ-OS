@@ -68,6 +68,24 @@ app.include_router(incidents.router)
 app.include_router(resources.router)
 
 
+@app.get("/", tags=["system"])
+def root_info():
+    """Root endpoint for status check and API documentation reference."""
+    return {
+        "service": "RESQ-OS Command Core API",
+        "status": "online",
+        "tagline": "Every Signal Matters. Every Response Counts.",
+        "docs_url": "/docs",
+        "health_check": "/api/health",
+    }
+
+
+@app.get("/health", tags=["system"])
+def health_alias():
+    """Direct /health alias pointing to /api/health for standard platform uptime monitors."""
+    return health_check()
+
+
 @app.get("/api/health", tags=["system"])
 def health_check():
     """

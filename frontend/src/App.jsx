@@ -288,7 +288,7 @@ export default function App() {
         <div style={{ backgroundColor: '#fef2f2', borderBottom: '1px solid #fca5a5', padding: '0.6rem 1.5rem' }}>
           <div className="flex items-center gap-2 text-critical text-xs font-semibold">
             <AlertCircle size={16} />
-            <span>Connection Error: {error}. Check backend server on port 8000.</span>
+            <span>Connection Error: {error}. Check backend service connectivity.</span>
           </div>
         </div>
       )}

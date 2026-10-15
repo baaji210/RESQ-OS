@@ -1,4 +1,19 @@
-const API_BASE = '/api';
+/**
+ * Dynamic resolution of Backend API Base URL.
+ * - In local dev (or reverse proxy): defaults to relative '/api', proxied by Vite to http://localhost:8000.
+ * - In production: reads import.meta.env.VITE_API_BASE_URL.
+ *   Gracefully handles variations with or without '/api' and with or without trailing slash.
+ */
+function resolveApiBase() {
+  const envUrl = (import.meta.env.VITE_API_BASE_URL || '').trim();
+  if (!envUrl) {
+    return '/api';
+  }
+  const clean = envUrl.replace(/\/+$/, '');
+  return clean.endsWith('/api') ? clean : `${clean}/api`;
+}
+
+export const API_BASE = resolveApiBase();
 
 /**
  * Handle API responses with proper error extraction
@@ -60,6 +75,11 @@ export const api = {
 
   async getPrioritizedIncidents() {
     const res = await fetch(`${API_BASE}/incidents/prioritize`);
+    return handleResponse(res);
+  },
+
+  async geocodeAddress(query) {
+    const res = await fetch(`${API_BASE}/incidents/geocode?q=${encodeURIComponent(query)}`);
     return handleResponse(res);
   },
 
